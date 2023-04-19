@@ -1,8 +1,4 @@
 
-variable "project_id" {
-  description = "The project to enable app engine on."
-  type        = string
-}
 
 variable "location_id" {
   description = "The location to serve the app from."
