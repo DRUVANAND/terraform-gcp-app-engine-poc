@@ -1,5 +1,5 @@
 resource "google_app_engine_application" "main" {
-  project        = var.project_id
+  project        = "engineer-cloud-nprod"
   location_id    = var.location_id
   auth_domain    = var.auth_domain
   serving_status = var.serving_status
