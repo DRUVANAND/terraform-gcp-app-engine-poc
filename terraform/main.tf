@@ -1,6 +1,6 @@
 resource "google_app_engine_application" "main" {
   project        = "engineer-cloud-nprod"
-  location_id    = var.location_id
+  location_id    = "us-central1"
   auth_domain    = var.auth_domain
   serving_status = var.serving_status
   dynamic "feature_settings" {
