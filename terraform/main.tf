@@ -53,7 +53,7 @@ resource "google_app_engine_standard_app_version" "myapp_v1" {
 }
 
 resource "google_storage_bucket" "bucket" {
-  name     = "appengine-static-content"
+  name     = "dhruv-appengine-github"
   location = "US"
 }
 
