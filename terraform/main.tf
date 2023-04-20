@@ -20,6 +20,7 @@ resource "google_app_engine_standard_app_version" "default_v1" {
   service    = "default"
   runtime    = "python37"
 
+  entrypoint  = "gunicorn -b :$PORT main:app"
   deployment {
     zip {
       source_url = "https://storage.googleapis.com/${google_storage_bucket.bucket.name}/${google_storage_bucket_object.object.name}"
