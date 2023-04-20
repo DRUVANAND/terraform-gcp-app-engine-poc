@@ -1,50 +1,64 @@
-resource "google_app_engine_application" "main" {
-  project        = "engineer-cloud-nprod"
-  location_id    = "us-central1"
-  auth_domain    = var.auth_domain
-  serving_status = var.serving_status
-  dynamic "feature_settings" {
-    for_each = var.feature_settings
-    content {
-      split_health_checks = lookup(feature_settings.value, "split_health_checks", true)
-    }
-  }
+resource "google_service_account" "custom_service_account" {
+  account_id   = "my-account"
+  display_name = "Custom Service Account"
 }
 
-resource "google_app_engine_standard_app_version" "app_v1" {
+resource "google_project_iam_member" "gae_api" {
+  project = google_service_account.custom_service_account.project
+  role    = "roles/compute.networkUser"
+  member  = "serviceAccount:${google_service_account.custom_service_account.email}"
+}
+
+resource "google_project_iam_member" "storage_viewer" {
+  project = google_service_account.custom_service_account.project
+  role    = "roles/storage.objectViewer"
+  member  = "serviceAccount:${google_service_account.custom_service_account.email}"
+}
+
+resource "google_app_engine_standard_app_version" "myapp_v1" {
   version_id = "v1"
-  service    = "default"
-  runtime    = "go115"
- 
+  service    = "myapp"
+  runtime    = "nodejs10"
+
   entrypoint {
-    shell = "main"
+    shell = "node ./app.js"
   }
- 
+
   deployment {
     zip {
-      source_url = "https://storage.googleapis.com/${google_storage_bucket.app.name}/${google_storage_bucket_object.app.name}"
+      source_url = "https://storage.googleapis.com/${google_storage_bucket.bucket.name}/${google_storage_bucket_object.object.name}"
     }
   }
- 
- 
+
+  env_variables = {
+    port = "8080"
+  }
+
   automatic_scaling {
     max_concurrent_requests = 10
-    min_idle_instances      = 1
-    max_idle_instances      = 3
-    min_pending_latency     = "1s"
-    max_pending_latency     = "5s"
- 
+    min_idle_instances = 1
+    max_idle_instances = 3
+    min_pending_latency = "1s"
+    max_pending_latency = "5s"
     standard_scheduler_settings {
-      target_cpu_utilization        = 0.5
+      target_cpu_utilization = 0.5
       target_throughput_utilization = 0.75
-      min_instances                 = var.min_instances
-      max_instances                 = var.max_instances
+      min_instances = 2
+      max_instances = 10
     }
   }
- 
-  vpc_access_connector {
-    name = google_vpc_access_connector.connector.self_link
-  }
- 
+
   delete_service_on_destroy = true
+  service_account = google_service_account.custom_service_account.email
+}
+
+resource "google_storage_bucket" "bucket" {
+  name     = "appengine-static-content"
+  location = "US"
+}
+
+resource "google_storage_bucket_object" "object" {
+  name   = "hello-world.zip"
+  bucket = google_storage_bucket.bucket.name
+  source = "./test-fixtures/appengine/hello-world.zip"
 }
