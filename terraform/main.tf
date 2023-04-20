@@ -1,5 +1,5 @@
 resource "google_service_account" "custom_service_account" {
-  account_id   = "my-account"
+  account_id   = "dhruv-account"
   display_name = "Custom Service Account"
 }
 
