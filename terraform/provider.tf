@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "google" {
-  project     = "dhruv-project-380116"
+  project     = "engineer-cloud-nprod"
   region      = "us-central1"
   zone        = "us-central1-c"
 }
