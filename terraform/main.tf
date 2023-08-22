@@ -1,4 +1,3 @@
-
 resource "google_app_engine_standard_app_version" "myapp_v1" {
   version_id = "v1"
   service    = "myapp"
@@ -39,7 +38,7 @@ resource "google_app_engine_standard_app_version" "myapp_v1" {
 
 
 resource "google_storage_bucket" "bucket" {
-  name     = "dhruv-appengine-github"
+  name     = "appengine-github"
   location = "US"
 }
 
