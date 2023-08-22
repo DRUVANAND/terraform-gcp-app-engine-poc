@@ -34,7 +34,7 @@ resource "google_app_engine_standard_app_version" "myapp_v1" {
   }
 
   delete_service_on_destroy = true
-  service_account = "dhruv-app-engine@engineer-cloud-nprod.iam.gserviceaccount.com"
+  service_account = "your-service-account"
 }
 
 
