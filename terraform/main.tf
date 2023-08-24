@@ -1,5 +1,5 @@
 resource "google_app_engine_application" "app" {
-  project     = google_project.my_project.project_id
+  project     = "your project id"
   location_id = "us-central"
 }
 
@@ -38,7 +38,7 @@ resource "google_app_engine_standard_app_version" "myapp_v1" {
   }
 
   delete_service_on_destroy = true
-  service_account = "app-engine-sa@cantech-terraform.iam.gserviceaccount.com"
+  service_account = "your service account"
 }
 
 
