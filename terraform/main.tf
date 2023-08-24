@@ -1,3 +1,8 @@
+resource "google_app_engine_standard_app" "myapp" {
+  project       = "cantech-terraform"
+  location      = "us-central1"
+}
+
 resource "google_app_engine_standard_app_version" "myapp_v1" {
   version_id = "v1"
   service    = "myapp"
