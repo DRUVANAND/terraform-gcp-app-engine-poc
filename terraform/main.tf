@@ -1,9 +1,3 @@
-resource "google_project" "my_project" {
-  name       = "My Project"
-  project_id = "cantech-terraform"
-  org_id     = "456692188473"
-}
-
 resource "google_app_engine_application" "app" {
   project     = google_project.my_project.project_id
   location_id = "us-central"
