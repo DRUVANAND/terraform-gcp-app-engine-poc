@@ -6,13 +6,13 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket  = "your-backend-bucket" // Replace with your backend bucket name
+    bucket  = "dhruv-backend-bucket" // Replace with your backend bucket name
     prefix  = "terraform/state"
   }
 }
 
 provider "google" {
-  project = "your-project-id" // Replace with your project ID
+  project = "cantech-terraform" // Replace with your project ID
   region  = "us-central1" // Replace with your desired region
   zone    = "us-central1-c" // Replace with your desired zone
 }
