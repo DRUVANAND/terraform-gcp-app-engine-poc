@@ -1,6 +1,6 @@
-resource "google_app_engine_standard_app" "myapp" {
-  project       = "cantech-terraform"
-  location      = "us-central1"
+resource "google_app_engine_application" "app" {
+  project     = "cantech-terraform"
+  location_id = "us-central"
 }
 
 resource "google_app_engine_standard_app_version" "myapp_v1" {
